@@ -6,6 +6,7 @@ import {
 } from "expo-camera";
 import { useState, useEffect, useRef } from "react";
 import { LinearGradient } from "expo-linear-gradient";
+
 import {
   Animated,
   Button,
@@ -160,6 +161,10 @@ export default function App() {
                 isKeyboardVisible && { bottom: 0 },
               ]}
             >
+              <Image
+                source={require("../dataFile/images/yayin.gif")} // GIF'in yolunu kontrol et
+                style={{ width: 400, height: 400 }}
+              />
               <View style={styles.footerButtons}>
                 <TouchableOpacity style={styles.footerBtn}>
                   <SvgXml xml={galleryIconXml} width={24} height={24} />
