@@ -161,10 +161,32 @@ export default function App() {
                 isKeyboardVisible && { bottom: 0 },
               ]}
             >
-              <Image
-                source={require("../dataFile/images/yayin.gif")} // GIF'in yolunu kontrol et
-                style={{ width: 400, height: 400 }}
-              />
+              <View>
+                {/* kullanici */}
+                <View>
+                  <View style={{flexDirection: 'row'}}>
+                    <View style={{}}>
+                      <Image
+                        source={require("../dataFile/images/chatuser.png")} // GIF'in yolunu kontrol et
+                        style={{ width: 34, height: 34, borderRadius: 50 }}
+                      />
+                    </View>
+                    <View style={{flexDirection: 'column',}}>
+                      <View>
+                        <Text style={{color: 'white',fontSize: 12, lineHeight:19.2,    fontFamily: "Poppins-Medium",
+}}>elmasyaren</Text>
+                      </View>
+                      <View>
+                        <Text style={{color: 'white',fontSize: 12, lineHeight:19.2,    fontFamily: "Poppins-Medium",
+}}> Efsane yayin Mükemmel</Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+
+                {/* kullanici */}
+              </View>
+
               <View style={styles.footerButtons}>
                 <TouchableOpacity style={styles.footerBtn}>
                   <SvgXml xml={galleryIconXml} width={24} height={24} />
