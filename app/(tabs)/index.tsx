@@ -6,6 +6,7 @@ import {
 } from "expo-camera";
 import { useState, useEffect, useRef } from "react";
 import { LinearGradient } from "expo-linear-gradient";
+import { Video, ResizeMode } from "expo-av";
 
 import {
   Animated,
@@ -20,6 +21,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Keyboard,
+  FlatList,
 } from "react-native";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import { SvgXml } from "react-native-svg";
@@ -48,6 +50,32 @@ export default function App() {
   const [liked, setLiked] = useState(false);
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const [viewers, setViewers] = useState(269);
+  const [comments, setComments] = useState([
+    {
+      id: "1",
+      user: "ibrahimkunut",
+      text: "Abi Efsane yayın ya Mükemmel",
+      image: require("../dataFile/images/chatuser3.png"),
+    },
+    {
+      id: "2",
+      user: "elmasyaren",
+      text: "Selamlar Lolovy'de bunu görmek süper",
+      image: require("../dataFile/images/chatuser.png"),
+    },
+    {
+      id: "3",
+      user: "elsaelsa",
+      text: "Lolovy'den mükemmel bir özellik daha",
+      image: require("../dataFile/images/chatuser4.jpg"),
+    },
+    {
+      id: "4",
+      user: "elsaelsa",
+      text: "ALOOOOOOO",
+      image: require("../dataFile/images/chatuser4.jpg"),
+    },
+  ]);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -71,7 +99,24 @@ export default function App() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setViewers((prevViewers) => prevViewers + Math.floor(Math.random() * 10) - 2);
+      setViewers(
+        (prevViewers) => prevViewers + Math.floor(Math.random() * 10) - 2
+      );
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setComments((prevComments) => {
+        const newComments = [...prevComments];
+        const shiftedComment = newComments.shift();
+        if (shiftedComment) {
+          newComments.push(shiftedComment);
+        }
+        return newComments;
+      });
     }, 3000);
 
     return () => clearInterval(interval);
@@ -159,34 +204,56 @@ export default function App() {
               style={[
                 styles.footerContainer,
                 isKeyboardVisible && { bottom: 0 },
+                { backgroundColor: 'transparent' } 
               ]}
             >
-              <View>
-                {/* kullanici */}
-                <View>
-                  <View style={{flexDirection: 'row'}}>
-                    <View style={{}}>
+              <Image
+                source={require("../dataFile/images/kalps.gif")}
+                style={{ width: 400, height: 600, position: 'absolute', left: 35, bottom: 70,  resizeMode: 'cover', }}
+              />
+              <FlatList
+                data={comments}
+                keyExtractor={(item) => item.id}
+                style={{ paddingHorizontal: horizontalScale(18) }}
+                renderItem={({ item }) => (
+                  <View style={styles.commentUser}>
+                    <View style={{ flexDirection: "row" }}>
                       <Image
-                        source={require("../dataFile/images/chatuser.png")} // GIF'in yolunu kontrol et
+                        source={item.image}
                         style={{ width: 34, height: 34, borderRadius: 50 }}
                       />
-                    </View>
-                    <View style={{flexDirection: 'column',}}>
-                      <View>
-                        <Text style={{color: 'white',fontSize: 12, lineHeight:19.2,    fontFamily: "Poppins-Medium",
-}}>elmasyaren</Text>
-                      </View>
-                      <View>
-                        <Text style={{color: 'white',fontSize: 12, lineHeight:19.2,    fontFamily: "Poppins-Medium",
-}}> Efsane yayin Mükemmel</Text>
+                      <View
+                        style={{ flexDirection: "column", paddingLeft: 10 }}
+                      >
+                        <Text
+                          style={{
+                            color: "white",
+                            fontSize: 12,
+                            letterSpacing: 0,
+                            lineHeight: 14.4,
+                            fontFamily: "Poppins-Medium",
+                          }}
+                        >
+                          {item.user}
+                        </Text>
+                        <Text
+                          style={{
+                            color: "white",
+                            fontSize: 12,
+                            letterSpacing: 0,
+                            lineHeight: 19.2,
+                            fontFamily: "Poppins-Medium",
+                          }}
+                        >
+                          {item.text}
+                        </Text>
                       </View>
                     </View>
                   </View>
-                </View>
-
-                {/* kullanici */}
-              </View>
-
+                )}
+                inverted
+              />
+              <View style={{ paddingHorizontal: horizontalScale(18) }}></View>
               <View style={styles.footerButtons}>
                 <TouchableOpacity style={styles.footerBtn}>
                   <SvgXml xml={galleryIconXml} width={24} height={24} />
@@ -211,7 +278,6 @@ export default function App() {
                   <SvgXml xml={emojisIconXml} width={24} height={24} />
                 </TouchableOpacity>
               </View>
-
               <View
                 style={[
                   styles.footer,
@@ -245,7 +311,7 @@ export default function App() {
                       xml={heartIconXml}
                       width={28}
                       height={28}
-                      fill={liked ? "red" : undefined}
+                      fill={liked ? "red" : "transparent"}
                     />
                   </TouchableOpacity>
                 </View>

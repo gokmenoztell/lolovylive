@@ -150,6 +150,9 @@ const styles = StyleSheet.create({
   keyboardAvoidingView: {
     flex: 1,
   },
+  commentUser:{
+     paddingVertical: verticalScale(12)
+  }
 });
 
 export { styles };
