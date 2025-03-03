@@ -11,9 +11,8 @@ import { useEffect, useState } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
-import SplashScreenComponent from "./screens/SplashScreen"; // Import the SplashScreen component
+import SplashScreenComponent from "./screens/SplashScreen"; // SplashScreen bileşeni
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -28,7 +27,7 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
       setTimeout(() => {
         setSplashScreenVisible(false);
-      }, 3000); // Display splash screen for 3 seconds
+      }, 3000); // 3 saniye splash screen göster
     }
   }, [loaded]);
 
@@ -44,6 +43,15 @@ export default function RootLayout() {
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
+          {/* Yayıncı ve İzleyici sayfalarında bottom tab navigation gizlendi */}
+          <Stack.Screen
+            name="streamer"
+            options={{ headerShown: false, presentation: "modal" }}
+          />
+          <Stack.Screen
+            name="viewer"
+            options={{ headerShown: false, presentation: "modal" }}
+          />
         </Stack>
       )}
       <StatusBar style="auto" />

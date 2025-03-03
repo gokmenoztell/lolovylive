@@ -46,6 +46,26 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="streamer"
+        options={{
+          title: "Streamer",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="video.fill" color={color} />
+          ),
+          tabBarStyle: { display: 'none' },
+        }}
+      />
+      <Tabs.Screen
+        name="viewer"
+        options={{
+          title: "Viewer",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="eye.fill" color={color} />
+          ),
+          tabBarStyle: { display: 'none' },
+        }}
+      />
     </Tabs>
   );
 }
